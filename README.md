@@ -4,7 +4,6 @@ Still in development...
 
 # How to use it?
 -  Install requirement.txt
--  Everything need to be saved in settings.json
 
 - Usage:
   
