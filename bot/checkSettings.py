@@ -7,7 +7,6 @@ from menu import menu
 from timer import *
 
 
-
 url_path = './config/urls.json'
 ssf_path = './sessions'
 CONFIG_DIR = "./config"
@@ -24,15 +23,7 @@ def check_module():
 	create_accounts_file()
 	create_sessions_folder()
 	time.sleep(1)
-	# if is_jsonFile_empty(url_path):
-	# 	print(f"{Fore.red}[-] The JSON file '{url_path}' is empty.{Style.reset}")
-	# 	print(f"{Fore.red}[!] Please input your url before do this.{Style.reset}")
-	# 	back_to_menu()
 
-	# else:
-	# 	print(f"{Fore.green}[+] The JSON file '{url_path}' is not empty.{Style.reset}")
-
-	time.sleep(1)
 	# Because the standard account is still development so use session instead....
 	if is_folder_empty(ssf_path):
 		print(f"{Fore.red}The folder '{ssf_path}' is empty.{Style.reset}")
