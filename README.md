@@ -4,6 +4,7 @@ Still in development...
 
 # How to use it?
 -  Install requirement.txt
+  `pip install -r /path/to/requirements.txt`
 
 - Usage:
   
