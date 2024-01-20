@@ -1,2 +1,6 @@
-# shopee-automatic-product-buying-remake
+# Shopee automatic product buying (remake)
+
 Still in development...
+
+
+# How to use it?
