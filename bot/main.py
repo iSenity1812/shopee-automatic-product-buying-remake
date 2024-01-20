@@ -44,60 +44,6 @@ SETTINGS_FILE = "settings.json"
 SETTINGS_PATH = os.path.join(CONFIG_DIR, SETTINGS_FILE)
 
 
-# def process_buttons(buttons, section_number):
-#     print(f"\nSection {section_number}:")
-#     for i, button in enumerate(buttons, 1):
-#         aria_label = button.get('aria-label')
-#         status = "Available" if button.get('aria-disabled') == "false" else "Sold out"
-#         print(f"[{i}] Button: {aria_label} - Status: {status}")
-
-# def mark_button_as_clicked(button):
-#     # Add logic to simulate the "clicked" state
-#     button['class'] = button.get('class', []) + ['T_6srb']
-#     # Add a tick icon after the button text
-#     button.div = button.new_tag('div', class_='NkXHv4')
-#     img_tag = button.new_tag('img', alt='icon-tick-bold', class_='QX2JQy', src='https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/productdetailspage/9057d6e718e722cde0e8.svg')
-#     button.div.append(img_tag)
-#     button.append(button.div)
-
-# def choose_options(buttons_section1, buttons_section2=None):
-#     process_buttons(buttons_section1, 1)
-
-#     if buttons_section2:
-#         process_buttons(buttons_section2, 2)
-
-#     selected_options = {}
-
-#     for section_number, buttons in [(1, buttons_section1), (2, buttons_section2)]:
-#         if buttons:
-#             input_prompt = f"\nInput for Section {section_number} (comma-separated numbers, leave empty if not applicable): "
-#             input_str = input(input_prompt)
-#             selected_buttons = [int(choice) for choice in input_str.split(",")] if input_str else []
-
-#             print(f"\nSection {section_number}:")
-#             for index in selected_buttons:
-#                 if 0 < index <= len(buttons):
-#                     button = buttons[index - 1]
-#                     label = button.get('aria-label')
-#                     status = "Available" if button.get('aria-disabled') == "false" else "Sold out"
-#                     print(f"[{index}] Button: {label} - Status: {status}")
-
-#                     # Simulate the click action
-#                     mark_button_as_clicked(button)
-
-#                     selected_options[section_number] = selected_options.get(section_number, []) + [(index, label, status)]
-#                 else:
-#                     print(f"Invalid index for Section {section_number}: {index}")
-
-#     print("\nSelected options:")
-#     for section_number, options in selected_options.items():
-#         print(f"Section {section_number}:")
-#         for index, label, status in options:
-#             print(f"[{index}] Button: {label} - Status: {status}")
-
-
-
-
 def wait_for_element_present(driver, xpath, timeout=10, max_attempts=15):
     """
     Wait for the presence of an element identified by xpath.
@@ -122,8 +68,6 @@ def wait_for_element_present(driver, xpath, timeout=10, max_attempts=15):
                 driver.refresh()
 
 
-
-
 def get_information_about_product():
     """
     Get infomation about product
@@ -139,16 +83,11 @@ def get_information_about_product():
     productStore = driver.find_element(by=By.XPATH, value='//*[@id="main"]/div/div[2]/div[1]/div[1]/div/div/section[1]/section[2]/div/div[4]/div/div/div/section[2]/div/div[2]')
     productPrice = driver.find_element(by=By.XPATH, value='//*[@id="main"]/div/div[2]/div[1]/div[1]/div/div/section[1]/section[2]/div/div[3]/div/div/section/div/div/div')
 
-
-
     xpath = '//*[@id="main"]/div/div[2]/div[1]/div[1]/div/div/section[1]/section[2]/div/div[4]/div/div/div/section[1]/div'
     container_element = driver.find_element(by=By.XPATH, value=xpath)
     button_elements = container_element.find_elements(by=By.TAG_NAME, value='button')
     
-    
     xpath_list = [f"{xpath}/button[{i}]" for i in range(1, len(button_elements) + 1)]
-
-    """Print a list of buttons"""
     # print(xpath_list)
     print(f"{Fore.cyan}[+] Buttons founded:{Style.reset} {len(xpath_list)}")
 
@@ -160,18 +99,6 @@ def get_information_about_product():
         else:
             print(f"{Fore.blue}[{i+1}] Clasify: {Style.reset} {button_elements[i].text} | {Fore.blue}[+] Status: {Style.reset} {Fore.green}Available{Style.reset}")
 
-    # Get status of product (Available / Not available)
-    # print xpath_list attribute 
-        # If aria-disabled = true > Not Available | else > Available
-
-    # for xpath in xpath_list:    
-    #     print(f"{Fore.yellow}[+]{Style.reset} {xpath}")
-    
-    # print(f"{Fore.cyan}[+] Select a button: {Style.reset}")
-    # for i in range(len(xpath_list)):
-    #     print(f"{Fore.red}[{i+1}]: {Style.reset} {xpath_list[i]}")
-
-    
     # Get classify choice 
     while True:
         try:
@@ -185,7 +112,6 @@ def get_information_about_product():
     print("---------------------------------------------------")
 
     xpath_choice = xpath_list[choice - 1]
-    # print(f"{Fore.green}[+] Location: {Style.reset}", xpath_choice)
 
     # Classify
     productClassify = driver.find_element(by=By.XPATH, value=xpath_choice)
@@ -205,10 +131,7 @@ def get_information_about_product():
 
     if countdown_seconds is not None:
         execute_countdown(countdown_seconds)
-
-
     orderTo_cart()
-
 
 
 # Describe: Order a product to cart
@@ -248,8 +171,6 @@ def orderTo_cart():
         print("Carting...")
 
 
-
-
 # Wait to check quantity and price
 def cart():
     quantity = int(settings['quantity'])
@@ -285,19 +206,15 @@ def cart():
         quantity_box.send_keys(quantity)
         driver.find_element(by=By.XPATH, value='//*[@id="main"]/div/div[2]/div/div/div[3]/main/div[2]/div[6]').click()
         print(f"{Fore.green}[*] Updated quantity to {Fore.blue}{value_str} {Style.reset}")
-        
 
         # Wait for price update
         time.sleep(0.6)
-
 
     # Move to checkout
     driver.find_element(by=By.CLASS_NAME, value="shopee-button-solid.shopee-button-solid--primary").click()
     print("[>>>] Navigating to checkout")
     cur_url = driver.current_url
     print(f"Current url: {cur_url}")
-
-
 
 
 # TODO: FIX PAYMENT METHOD
@@ -307,53 +224,33 @@ def check_out():
     change_payment_method_xpath = '//*[@id="main"]/div/div[2]/div/div[2]/div[4]/div[1]/div/button'
     cod_box_xpath = '//*[@id="main"]/div/div[2]/div/div[2]/div[4]/div[1]/div/div/div[1]/div[2]/div[1]/span[5]/button'
     check_out_btn_xpath = '//*[@id="main"]/div/div[2]/div/div[2]/div[4]/div[2]/div[4]/button'
-
     wait_for_element_present(driver, check_out_btn_xpath)
-    # Check if the 'cod' button is checked
-
-
-    # Check if 'cod' button valid
     try: 
         cod_box = driver.find_element(by=By.XPATH, value=cod_box_xpath)# valid
-
-        
         isCod_checked = cod_box.get_attribute('aria-checked')
         if isCod_checked == "false":
             print("Cod is not checked")
             cod_box.click()
-
         else:
             print("Cod is checked")
-
         print(f"aria-checked: {cod_box.get_attribute('aria-checked')}")
 
     except NoSuchElementException: # Change payment btn valid ('Cod' btn is not valid)
         print("Cod button not found. Continuing")
-
-
+        
     checkout_btn_class = "stardust-button.stardust-button--primary.stardust-button--large.LtH6tW"
     checkout_btn = driver.find_element(by=By.CLASS_NAME, value=checkout_btn_class)
     driver.execute_script("arguments[0].scrollIntoView();", checkout_btn)
-
     if checkout == "on":
         checkout_btn.click()
-    
     print(f"{Fore.green}[+] Order successfully.{Style.reset}")
-
     end_time = time.time()
-
-
-
-
 
 
 def order_block():
     get_information_about_product()
     cart()
     check_out()
-
-
-
 
 
 if __name__ == "__main__":
@@ -380,8 +277,5 @@ if __name__ == "__main__":
     print(f"Run time: {run_time} seconds")
 
 
-
-
-    time.sleep(100)
+    time.sleep(150)
     driver.quit()
-
