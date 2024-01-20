@@ -51,18 +51,14 @@ def Func1_addAccount():
 	print_menu_header("Menu > Insert")
 	print_menu_header_option("[1] Insert accounts", "[b/B] Back to menu")
 	Func_choice = input(f"{Fore.yellow}Choice:{Style.reset} ")
-
 	if Func_choice == "1":
         # Execute Function
 		username = input(f"{Fore.cyan}[?]{Style.reset} Enter the username: ")
 		password = input(f"{Fore.cyan}[?]{Style.reset} Enter the password: ")
-
 		add_account(username, password)
-        
 	elif Func_choice == "B".lower():
 		clear_console()
-		menu()
-		
+		menu()	
 	else:
 		clear_console()
 		print(f"{Fore.red}[!] Invalid input.{Style.reset}")
@@ -119,11 +115,9 @@ def Func2_editAccount():
             # Call edit_account only if the account with the entered username exists
 			if any(account.username == username for account in get_accounts()):
 				new_username = input(f"{Fore.cyan}[?]{Style.reset} Enter the new username: ")
-
                 # Check if the new username is not empty
 				if new_username:
 					new_password = input(f"{Fore.cyan}[?]{Style.reset} Enter the new password: ")
-
 					edit_account(username, new_username, new_password)
 				else:
 					print(f"{Fore.rgb(192, 210, 25)}[!] New username cannot be empty.{Style.reset}")
@@ -131,7 +125,6 @@ def Func2_editAccount():
 				print(f"{Fore.rgb(192, 210, 25)}[!] The account with username {Fore.cyan}{username}{Style.reset} {Fore.yellow}does not exist.{Style.reset}")
 		else:
 			print(f"{Fore.rgb(192, 210, 25)}[!] Username cannot be empty.{Style.reset}")
-
 		# REDO
 		redo_choice = input(f"{Fore.yellow}[?] Redo {Style.reset}({Fore.green}Y{Style.reset}/{Fore.red}N{Style.reset}): ")
 		if redo_choice == "Y".lower():
@@ -146,7 +139,6 @@ def Func2_editAccount():
 			clear_console()
 			print(f"{Fore.red}[!] Invalid input.{Style.reset}")
 			menu()
-        
 	elif Func_choice == "B".lower():
 		clear_console()
 		menu()
@@ -154,7 +146,6 @@ def Func2_editAccount():
 		clear_console()
 		print(f"{Fore.red}[!] Invalid input.{Style.reset}")
 		Func2_editAccount()
-
 
 
 #=======================================================================
@@ -168,8 +159,7 @@ def Func3_deleteAccount():
 
 	if Func_choice == "1":
 		#Execute Function
-		username = input(f"{Fore.yellow}Enter the username of the account to delete: {Style.reset}")	
-
+		username = input(f"{Fore.yellow}Enter the username of the account to delete: {Style.reset}")
 		if username:
             # Call edit_account only if the account with the entered username exists
 			print(f"{Fore.yellow}[CHECKING ACCOUNT... ]{Style.reset}")
@@ -185,7 +175,6 @@ def Func3_deleteAccount():
 						clear_console()
 						Func3_deleteAccount()
 					if redo_choice == "N".lower():
-
 						input("Any key to back to the menu...")
 						clear_console()
 						menu()
@@ -219,13 +208,11 @@ def Func4_exportAccount():
 	if Func_choice == "1":
        # Enter account to export (view)
 		username = input(f"{Fore.green}[+] Enter the username of the account to view: {Style.reset}")
-
        # Check if username is not empty
 		if username:
 			view_account(username)
 		else:
 			print(f"{Fore.rgb(192, 210, 25)}[!] Username cannot be empty.{Style.reset}")
-
        # REDO
 		redo_choice = input(f"{Fore.yellow}[?] Redo {Style.reset}({Fore.green}Y{Style.reset}/{Fore.red}N{Style.reset}): ")
 
@@ -288,9 +275,7 @@ def handle_standard_method():
 	print(f"{Fore.red}[-] Sorry this feature is still in development. Please use sessions instead...{Style.reset}")
 	Func6_Order_Area()
 
-
 def update_exported_url(exported_url):
-
 	settings = load_data_from_json(SETTINGS_PATH) or {}
 	settings["url"] = exported_url
 	save_data_to_json(settings, SETTINGS_PATH)
@@ -298,18 +283,14 @@ def update_exported_url(exported_url):
 	print(f"{Fore.green}[+] Settings updated successfully.{Style.reset}")
 	print(f"{Fore.green}[URL]{Style.reset} - {settings['url']}")
 
-
 def insert_url():
-
 	url_name = input(f"{Fore.blue}[?] Site's name:{Style.reset} ")
 	url_value = input(f"{Fore.blue}[?] URL:{Style.reset} ")
 
 	save_url(url_name, url_value)
 	handle_url_saved_confirmation()
 
-
 def handle_url_saved_confirmation():
-
 	config_folder = './config'
 	urls_file_path = os.path.join(config_folder, 'urls.json')
 
@@ -318,7 +299,6 @@ def handle_url_saved_confirmation():
 	if yn.lower() == "y":
 		urlS = load_data_from_json(urls_file_path)
 		if urlS:
-
 			new_site = urlS[-1]
 			print(f"{Fore.green}[+] Site's name: {Style.reset}{new_site['name']}")
 			print(f"{Fore.green}[+] Your url:{Style.reset}{new_site['url']}")
@@ -340,7 +320,6 @@ def handle_url_saved_confirmation():
 			input("Any key to back...")
 			clear_console()
 			Func6_Order()
-
 		else:
 			print(f"{Fore.red}[-] No urls found {Style.reset}")
 			input("Any key to back...")
@@ -351,7 +330,6 @@ def handle_url_saved_confirmation():
 
 
 def export_url_from_settings():
-
 	config_folder = './config'
 	urls_file_path = os.path.join(config_folder, 'urls.json')
 
@@ -370,7 +348,6 @@ def export_url_from_settings():
 
 
 def set_quantity_rt_checkout():
-
 	quantity = input(f"{Fore.yellow}[?] Quantity:{Style.reset} ")
 	attempt = input(f"{Fore.yellow}[?] Refresh times:{Style.reset} ")
 	order = input(f"{Fore.yellow}[?] Auto Checkout{Style.reset} ({Fore.green}on{Style.reset}/{Fore.red}off{Style.reset}):{Style.reset} ")
@@ -409,7 +386,6 @@ def update_settings_with_qrtc(quantity, attempt, order):
 
 
 def Func6_Order():
-
 	print_menu_header("[Menu > Order]")
 	print_menu_header_option("[1] Order Area Settings", "[b/B] Back to menu")
 	Func_choice = input(f"{Fore.yellow}[?] Choice:{Style.reset} ")
@@ -426,24 +402,15 @@ def Func6_Order():
 		Func6_Order()
 
 
-
-
-# [6]
-
 def Func6_Order_Area():
-
 	print_menu_header("[Menu > Order > Order-Area]")
 	print_menu_header_option("[1] Choose sign-in method", "[2] Insert and choose URL", "[3] Order settings", "[b/B] Back")
-
 	Func_choice = input(f"{Fore.yellow}[?] Choice:{Style.reset} ")
-
 	# [Sign-in]
 	if Func_choice == "1":
-
 		clear_console()
 		print_menu_header("[Menu > Order > Order-Area > Sign-in-Method]")
 		print_menu_header_option("[1] Standard", "[2] Sessions", "[b/B] Back")
-
 		method = input(f"{Fore.yellow}[?] Choice:{Style.reset} ")
 		if method == "1":
 			handle_standard_method()
@@ -455,24 +422,18 @@ def Func6_Order_Area():
 		else:
 			handle_invalid_input()
 			Func6_Order_Area()
-
-
 	# [URL]
 	elif Func_choice == "2":
 		clear_console()
 		print_menu_header("[Menu > Order > Order-Area > URLs]")
 		print_menu_header_option("[1] Insert URL", "[2] Export URLs", "[b/B] Back")
 		choice = input(f"{Fore.yellow}[?] Choice: {Style.reset}")
-		
 		if choice == "1":
 			insert_url()
 			handle_url_saved_confirmation()
-
 		# Export URL to settings
 		elif choice == "2":
 			export_url_from_settings()
-
-
 		elif choice.lower() == "b":
 			clear_console()
 			Func6_Order()
@@ -480,16 +441,12 @@ def Func6_Order_Area():
 			clear_console()
 			print(f"{Fore.red}[!] Invalid input.{Style.reset}")
 			Func6_Order_Area()
-
-
 	# [Quantity, refresh times, checkout] 
 	elif Func_choice == "3":
 		set_quantity_rt_checkout()
-
 	elif Func_choice.lower() == "b":
 		clear_console()
 		Func6_Order()
-
 	else: 
 		handle_invalid_input()
 		Func6_Order_Area()
@@ -539,8 +496,6 @@ def Func6_Order_Area_Sessions():
 
 
 
-
-
 #=====================================================================#
 # [OPTIONS PROCESSOR]
 def optionProcessing(choice):
@@ -571,10 +526,7 @@ def optionProcessing(choice):
 #[CONSOLE]{Fore.yellow}[!] Invalid input. Please try again!{Style.reset} #
 #==============================================#
 			""")
-		
 		menu()
-
-
 
 
 
