@@ -3,11 +3,7 @@ from colored import Fore, Back, Style
 import os
 import time
 
-# NOTE: Fix delete and edit account func
-    # delete: Not checked the account existed
-    # edit: Done
 
-# CLASS
 
 class Account:
     def __init__(self, username, password):
@@ -20,19 +16,8 @@ class Account:
             "password": self.password
         }
 
-
-
-
-
 # [SAVE ACCOUNT] #
-
 def save_accounts(accounts):
-    """Saves the list of accounts to a JSON file.
-
-    Args:
-        accounts: A list of Account objects.
-    """
-
     with open("accounts.json", "w") as f:
         json.dump([account.to_dict() for account in accounts], f, indent=4)
 
@@ -53,7 +38,6 @@ def load_data_from_json(filename):
 
 
 # [CREATE ACCOUNT JSON FILE] #
-
 def create_accounts_file():
     accounts_file_path = "accounts.json"
 
@@ -90,7 +74,6 @@ def create_sessions_folder():
         time.sleep(1)
 
 
-
 def is_jsonFile_empty(file_path):
     try:
         with open(file_path, 'r') as f:
@@ -107,15 +90,9 @@ def is_folder_empty(folder_path):
     except FileNotFoundError:
         return True
 
+
 # [CHECK IF JSON FILE WRITABLE] #
-
 def is_accounts_file_writable(filename):
-    """Checks if the accounts.json file is writable.
-
-    Returns:
-        True if the accounts.json file is writable, False otherwise.
-    """
-
     try:
         with open(filename, "r") as f:
             json.load(f)
@@ -128,18 +105,8 @@ def is_accounts_file_writable(filename):
     return True
 
 
-
-
-
 # [GET ACCOUNT FROM USER INPUT] #
-
 def get_accounts():
-    """Get accounts from JSON file.
-
-    Returns:
-        A list of Account objects.
-    """
-
     try:
         with open("accounts.json", "r") as f:
             account_data_list = json.load(f)
@@ -155,19 +122,8 @@ def get_accounts():
     return accounts
 
 
-
-
-
-
-
 # [VIEW SPECIFIC ACCOUNT]
-
 def view_account(username):
-    """View account details based on the provided username.
-
-    Args:
-        username: The username of the account to view.
-    """
     accounts = get_accounts()
 
     # Check if the account with the entered username exists
@@ -182,20 +138,9 @@ def view_account(username):
         print(f"{Fore.rgb(192, 210, 25)}[!] The account with username {Fore.cyan}{username}{Style.reset} {Fore.yellow}does not exist.{Style.reset}")
 
 
-
-
 # [CHECK IF USERNAME IS EXISTED]
-
 def check_username_exists(username, account_json_file):
-    """Checks if the username exists in the specified JSON file.
 
-    Args:
-        username: The username to check.
-        account_json_file: The path to the JSON file containing the user data.
-
-    Returns:
-        True if the username exists, False otherwise.
-    """
     try:
         with open(account_json_file, "r") as f:
             account_data = json.load(f)
@@ -208,18 +153,8 @@ def check_username_exists(username, account_json_file):
     return False
 
 
-
-
-
 # [INSERT NEW ACCOUNT] #
-
 def add_account(username, password):
-    """Adds a new account to the JSON file.
-
-    Args:
-        username: The username of the new account.
-        password: The password of the new account.
-    """
     account_json_file = "accounts.json"
 
     if not is_accounts_file_writable(account_json_file):
@@ -240,26 +175,6 @@ def add_account(username, password):
     save_accounts(accounts)
 
 
-
-
-
-# [PREVENT DUPLICATE USERNAME]
-def prevent_duplicate_username(username, account_json_file):
-    """Prevents the user from adding a duplicate username to the JSON file.
-
-    Args:
-        username: The username to check.
-        account_json_file: The path to the JSON file containing the user data.
-    """
-
-    while check_username_exists(username, account_json_file):
-        print("Username already exists. Please enter a different username.")
-        username = input("Enter a different username: ")
-
-
-
-
-
 # [IMPORT ACCOUNT FROM JSON]
 def import_account(username):
     """Imports an account from the JSON file.
@@ -277,18 +192,6 @@ def import_account(username):
             return account
     return None
 
-
-def is_username_duplicate(accounts, new_username):
-    """Check if the new username is already in use.
-
-    Args:
-        accounts: List of existing accounts.
-        new_username: The new username to check.
-
-    Returns:
-        True if the new username is a duplicate, False otherwise.
-    """
-    return any(account.username == new_username for account in accounts)
 
 
 # [DELETE ACCOUNT]
@@ -349,9 +252,6 @@ def edit_account(username, new_username, new_password):
         print(f"{Fore.rgb(192, 210, 25)}The account with username {Fore.cyan}{username}{Style.reset} {Fore.yellow}does not exist.{Style.reset}")
 
 
-
-
-
 # [GET USERNAME FROM JSON]
 def get_username_from_json_acount(account_json_file, account_index):
     with open (account_json_file, "r") as f:
@@ -362,9 +262,6 @@ def get_username_from_json_acount(account_json_file, account_index):
     username = account_data[int(account_index)]["username"]
 
     return  username
-
-
-
 
 
 # [VIEW ALL USERNAMES]
@@ -388,11 +285,7 @@ def view_all_usernames_in_json_file(account_json_file):
     return usernames
 
 
-
-
-
 # [SESSIONS PART]
-
 def view_all_sessions_in_folder():
     # Check if 'sessions' folder exists
     sessions_folder = 'sessions'
@@ -408,6 +301,7 @@ def view_all_sessions_in_folder():
         return False
 
     return True
+
 
 # [SAVE SESSIONS]
 def save_session(session_string, session_name):
@@ -447,10 +341,6 @@ def view_session_names():
             session_name = os.path.splitext(session_file)[0]
             print(f"- {session_name}")
 
-    # return True
-
-
-
 
 # [VIEW SESSION DATA - IN DEVS]
 def view_session_data():
@@ -470,7 +360,6 @@ def view_session_data():
     else:
         print(f"\nSession '{chosen_session_name}' not found.")
         return None
-
 
 
 # [INSERT URLs]
@@ -497,10 +386,6 @@ def save_url(name, url):
         json.dump(data, f, indent=4)
 
     print(f"URL '{name}' saved to: {urls_file_path}")
-
-
-
-
 
 
 # [VIEW AND EXPORT URLs]
@@ -534,7 +419,6 @@ def view_and_export_urls():
             print("Invalid choice. Please enter a valid number.")
     except ValueError:
         print("Invalid input. Please enter a number.")
-
 
 
 # [EXPORT URL WITH NAME INPUT]
