@@ -4,7 +4,7 @@ Still in development...
 
 # How to use it?
 -  Install requirement.txt
-  `pip install -r /path/to/requirements.txt`
+  `pip install -r .\bot\requirement.txt`
 
 - Usage:
   
