@@ -45,15 +45,7 @@ SETTINGS_PATH = os.path.join(CONFIG_DIR, SETTINGS_FILE)
 
 
 def wait_for_element_present(driver, xpath, timeout=10, max_attempts=15):
-    """
-    Wait for the presence of an element identified by xpath.
-    If the timeout occurs, refresh the page and try again.
 
-    :param driver: WebDriver instance
-    :param xpath: XPath of the element to wait for
-    :param timeout: Maximum time to wait for each attempt, in seconds (default is 10)
-    :param max_attempts: Maximum number of attempts (default is 15)
-    """
     attempts = 0
     while attempts < max_attempts:
         try:
@@ -69,12 +61,7 @@ def wait_for_element_present(driver, xpath, timeout=10, max_attempts=15):
 
 
 def get_information_about_product():
-    """
-    Get infomation about product
-        - Title, Price, Rate, Store/Valid quantity, Price
-        - clasify
-            - Location of Types / Options
-    """
+
     global xpath_choice
     print("====================================================")
     productTitle = driver.find_element(by=By.XPATH, value='//*[@id="main"]/div/div[2]/div[1]/div[1]/div/div/section[1]/section[2]/div/div[1]/span')
@@ -134,7 +121,6 @@ def get_information_about_product():
     orderTo_cart()
 
 
-# Describe: Order a product to cart
 start_time = 0
 end_time = 0
 attempts = 0
@@ -207,7 +193,7 @@ def cart():
         driver.find_element(by=By.XPATH, value='//*[@id="main"]/div/div[2]/div/div/div[3]/main/div[2]/div[6]').click()
         print(f"{Fore.green}[*] Updated quantity to {Fore.blue}{value_str} {Style.reset}")
 
-        # Wait for price update
+        # Wait for price updating
         time.sleep(0.6)
 
     # Move to checkout
@@ -217,7 +203,6 @@ def cart():
     print(f"Current url: {cur_url}")
 
 
-# TODO: FIX PAYMENT METHOD
 checkout = settings['order']
 def check_out():
     global end_time
