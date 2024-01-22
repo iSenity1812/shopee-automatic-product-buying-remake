@@ -12,8 +12,8 @@ Still in development...
 
 - Usage:
   
-  1. Insert sessions (paste your cookie in here)
-  2. Insert URL
-  3. Set other settings (check-out, refresh times, quantity)
-  4. Start order...
-  5. Enjoy
+  - Insert sessions (paste your cookie in here)
+  -  Insert URL
+  -  Set other settings (check-out, refresh times, quantity)
+  -  Start order...
+  -  Enjoy
