@@ -35,12 +35,3 @@ def execute_countdown(countdown_seconds):
         time.sleep(1)
 
     print("\nCountdown finished!")
-
-# def set_countdown():
-#     countdown_seconds = get_countdown_duration()
-
-#     if countdown_seconds is not None:
-#         execute_countdown(countdown_seconds)
-
-# # Example usage
-# set_countdown()
