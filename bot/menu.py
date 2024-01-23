@@ -494,6 +494,35 @@ def Func6_Order_Area_Sessions():
 	clear_console()
 	Func6_Order()
 
+#=====================================================================
+def Func9_Settings():
+	print_menu_header("[Menu > Settings]")
+	print_menu_header_option("[1] Reset settings", "[b/B] Back")
+	Func_choice = input(f"{Fore.yellow}[?] Choice: {Style.reset}")
+
+	if Func_choice == "1":
+		if not os.path.exists(CONFIG_DIR):
+			os.makedirs(CONFIG_DIR)
+		settings = load_data_from_json(SETTINGS_PATH)
+		if settings is None:
+			settings = {}
+		settings.update({
+	        'session': "",
+	        'url': "",
+	        'attempt': "",
+	        'quantity': "",
+	        'order': ""
+	    })
+		save_data_to_json(settings, SETTINGS_PATH)
+		print(f"{Fore.green}[!] Settings reset..{Style.green}")
+		input("Any key to back..")
+		menu()
+	elif choice.lower() == "b":
+		clear_console()
+		menu()
+	else:
+		handle_invalid_input()
+
 
 
 #=====================================================================#
@@ -514,12 +543,13 @@ def optionProcessing(choice):
 		Func5_viewAllAccounts()
 	elif choice == "6":
 		Func6_Order()
+	elif choice == "9":
+		Func9_Settings()
 	elif choice in ["0", "q"]:
 		exit()
 	elif choice.lower() in ["start", "s"]:
-		from checkSettings import check_module
-		check_module()
-
+		print(f"{Fore.green} [+] Waiting for a bit...{Style.reset}")
+		
 	else:
 		print(f"""
 #==============================================#
@@ -563,7 +593,7 @@ def menu():
 |       {Fore.rgb(47, 216, 194)}Order{Style.reset}         |  [Key-6]    |    {Fore.green}✔️{Style.reset}    |
 | {Fore.rgb(47, 216, 194)}View Product's URL{Style.reset}  |  [Key-7]    |    {Fore.red}❌{Style.reset}    |
 |   {Fore.rgb(47, 216, 194)}Export to excel{Style.reset}   |  [Key-8]    |    {Fore.red}❌{Style.reset}    |
-|       {Fore.rgb(47, 216, 194)}Settings{Style.reset}      |  [Key-9]    |    {Fore.red}❌{Style.reset}    |
+|       {Fore.rgb(47, 216, 194)}Settings{Style.reset}      |  [Key-9]    |    {Fore.red}✔️{Style.reset}    |
 |	 {Fore.rgb(47, 216, 194)}Exit{Style.reset}	      |  [Key-0]    |    {Fore.green}✔️{Style.reset}    |
 |{Fore.rgb(47, 216, 194)}Search product's name{Style.reset}|  [Key-11]   |    {Fore.red}❌{Style.reset}    |
 ================================================
