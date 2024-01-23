@@ -199,8 +199,8 @@ def cart():
     # Move to checkout
     driver.find_element(by=By.CLASS_NAME, value="shopee-button-solid.shopee-button-solid--primary").click()
     print("[>>>] Navigating to checkout")
-    cur_url = driver.current_url
-    print(f"Current url: {cur_url}")
+    # cur_url = driver.current_url
+    # print(f"Current url: {cur_url}")
 
 
 checkout = settings['order']
@@ -240,6 +240,14 @@ def order_block():
 
 if __name__ == "__main__":
     menu()
+    from checkSettings import check_module
+    check_module()
+    cf = input("Do you want to start order (y/n): ")
+    if cf.lower() == "y":
+        print(f"{Fore.green}[>>>] Starting...{Style.reset}")
+    else:
+        clear_console()
+        menu()
 
     driver = uc.Chrome(headless=False, use_subprocess=False)
     time.sleep(5)
