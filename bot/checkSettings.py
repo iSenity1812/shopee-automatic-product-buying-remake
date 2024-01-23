@@ -68,12 +68,3 @@ def check_module():
 {Fore.green}Payment method{Style.reset}: {Fore.rgb(123, 86, 225)}{settings['payment']}{Style.reset}
 """)
 
-
-	cf = input("Do you want to start order (y/n): ")
-	if cf.lower() == "y":
-		print(f"[>>>] Starting...")
-		
-	else:
-		clear_console()
-		menu()
-		
