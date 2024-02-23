@@ -249,7 +249,7 @@ if __name__ == "__main__":
         clear_console()
         menu()
 
-    driver = uc.Chrome(headless=False, use_subprocess=False)
+    driver = uc.Chrome(headless=False, use_subprocess=False, version_main=120) # Change every update chrome version (Current the new chrome version is 120)
     time.sleep(5)
 
     # LOAD SETTINGS.JSON
