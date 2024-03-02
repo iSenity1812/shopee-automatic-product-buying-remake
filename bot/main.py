@@ -1,4 +1,4 @@
-# This bot is just a demo version made by Hasami Nagisa (S3n1ty) - old name: Asaki
+# This bot is just a demo version made by S3n1ty (Asaki)
 # Contact: 
 # Discord: isepipi8239
 
@@ -18,7 +18,8 @@ from seleniumwire.utils import decode
 import undetected_chromedriver as uc
 from seleniumwire.utils import decode
 from menu import menu
-from timer import *
+from countdown import *
+from clearConsole import clear_console
 
 
 def decode_network(request):
@@ -134,11 +135,11 @@ def orderTo_cart():
     is_ariaDisabled = driver.find_element(by=By.XPATH, value=xpath_choice).get_attribute('aria-disabled')
     if is_ariaDisabled == "true": # Sold out
         attempts += 1
-        print("Product was sold out")
-        print("Next check")
+        print(f"{Fore.red}[BOT]{Style.reset} Product was sold out")
+        print(f"{Fore.red}[BOT]{Style.reset} Next check..")
         
         if attempts >= max_attempts: # Attempt is running out
-            print("Sorry, this product was sold out today. You can choose others instead")
+            print(f"{Fore.red}[BOT]{Style.reset} Sorry, this product was sold out today. You can choose others instead")
             get_information_about_product()
         driver.refresh()
         # Check if xpath present
@@ -146,15 +147,15 @@ def orderTo_cart():
         orderTo_cart()
 
     else: # Available
-        print("Product is Available")
+        print(f"{Fore.red}[BOT]{Style.reset} Product is Available")
         variant_select = driver.find_element(by=By.XPATH, value=xpath_choice)
         driver.execute_script("arguments[0].scrollIntoView();", variant_select)
         variant_select.click()
-        print("Button clicked")
+        print(f"{Fore.red}[BOT]{Style.reset} Button clicked")
 
         move_to_cart_Class = 'btn.btn-solid-primary.btn--l.YuENex'
         driver.find_element(by=By.CLASS_NAME, value=move_to_cart_Class).click()
-        print("Carting...")
+        print(f"{Fore.red}[BOT]{Style.reset} Carting...")
 
 
 # Wait to check quantity and price
@@ -167,10 +168,10 @@ def cart():
     if is_ariaChecked == 'false':
         driver.execute_script("arguments[0].scrollIntoView();", check_box)
         check_box.click()
-        print(f"aria-checked: {check_box.get_attribute('aria-checked')}")
+        print(f"{Fore.red}[BOT]{Style.reset} aria-checked: {check_box.get_attribute('aria-checked')}")
     else:
-        print("Box is already checked")
-        print(f"aria-checked: {check_box.get_attribute('aria-checked')}")
+        print(f"{Fore.red}[BOT]{Style.reset} Box is already checked")
+        print(f"{Fore.red}[BOT]{Style.reset} aria-checked: {check_box.get_attribute('aria-checked')}")
 
 
     # Quantity
@@ -180,27 +181,27 @@ def cart():
     value_int = None
     if value_str is not None:
         value_int = int(value_str)
-        print("Quantity as integer:", value_int)
+        print(f"{Fore.red}[BOT]{Style.reset} Quantity as integer:", value_int)
     else:
-        print("Value is None. Handle this case accordingly.")
+        print(f"{Fore.red}[BOT]{Style.reset} Value is None. Handle this case accordingly.")
 
     if quantity != value_int:
-        print('Value is not matched')
+        print(f"{Fore.red}[BOT]{Style.reset} Value is not matched")
         quantity_box.click()
         quantity_box.send_keys(Keys.CONTROL, "a")
         quantity_box.send_keys(Keys.BACKSPACE)
         quantity_box.send_keys(quantity)
         driver.find_element(by=By.XPATH, value='//*[@id="main"]/div/div[2]/div/div/div[3]/main/div[2]/div[6]').click()
-        print(f"{Fore.green}[*] Updated quantity to {Fore.blue}{value_str} {Style.reset}")
+        print(f"{Fore.red}[BOT]{Style.reset} {Fore.green}[*] Updated quantity to {Fore.blue}{value_str} {Style.reset}")
 
         # Wait for price updating
         time.sleep(0.6)
 
     # Move to checkout
     driver.find_element(by=By.CLASS_NAME, value="shopee-button-solid.shopee-button-solid--primary").click()
-    print("[>>>] Navigating to checkout")
-    # cur_url = driver.current_url
-    # print(f"Current url: {cur_url}")
+    print(f"{Fore.red}[BOT]{Style.reset} {Fore.green}[>>>]{Style.reset} Navigating to checkout")
+    cur_url = driver.current_url
+    print(f"{Fore.red}[BOT]{Style.reset} Current url: {cur_url}")
 
 
 checkout = settings['order']
@@ -218,10 +219,10 @@ def check_out():
             cod_box.click()
         else:
             print("Cod is checked")
-        print(f"aria-checked: {cod_box.get_attribute('aria-checked')}")
+        print(f"{Fore.red}[BOT]{Style.reset} aria-checked: {cod_box.get_attribute('aria-checked')}")
 
     except NoSuchElementException: # Change payment btn valid ('Cod' btn is not valid)
-        print("Cod button not found. Continuing")
+        print(f"{Fore.red}[BOT]{Style.reset} Cod button not found. Continuing")
         
     checkout_btn_class = "stardust-button.stardust-button--primary.stardust-button--large.LtH6tW"
     checkout_btn = driver.find_element(by=By.CLASS_NAME, value=checkout_btn_class)
@@ -244,12 +245,17 @@ if __name__ == "__main__":
     check_module()
     cf = input("Do you want to start order (y/n): ")
     if cf.lower() == "y":
-        print(f"{Fore.green}[>>>] Starting...{Style.reset}")
+        print(f"[>>>] Starting...")
+        print("====================================================")
     else:
         clear_console()
         menu()
 
-    driver = uc.Chrome(headless=False, use_subprocess=False, version_main=120) # Change every update chrome version (Current the new chrome version is 120)
+    log_path = "/chromedriver.log"
+
+    options = uc.ChromeOptions()
+    options = options.add_argument("--headless=new")
+    driver = uc.Chrome(use_subprocess=False, options=options, version_main=122)
     time.sleep(5)
 
     # LOAD SETTINGS.JSON
@@ -261,14 +267,16 @@ if __name__ == "__main__":
     # Login 
     sessionLogin(session=f"{settings['session']}.json")
     driver.refresh()
-    print("Loading...")
+    print(f"{Fore.red}[BOT]{Style.reset} Loading...")
     
     time.sleep(3)
     countdown_seconds = get_countdown_duration()
     order_block()
     run_time = end_time - start_time
-    print(f"Run time: {run_time} seconds")
+    print(f"{Fore.red}[BOT]{Style.reset} Run time: {Fore.green}{run_time}{Style.reset} seconds")
 
 
     time.sleep(150)
+    print(f"{Fore.red}[BOT]{Style.reset} No action. Shutting down...")
+    time.sleep(5)
     driver.quit()
