@@ -4,7 +4,7 @@ from colored import Fore, Back, Style
 from clearConsole import clear_console
 from accountManage import *
 from menu import menu
-from timer import *
+from countdown import *
 
 
 url_path = './config/urls.json'
